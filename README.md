@@ -1,4 +1,4 @@
-KMS激活你的Windows系统和Office桌面应用
+KMS激活你的Windows系统和Office桌面应用。本应用将发布在Microsoft Store，GitHub不提供发布版本。
 
 本应用可用于激活您的Windows操作系统和Office桌面应用。
 
