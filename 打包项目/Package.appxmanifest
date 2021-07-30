@@ -8,11 +8,11 @@
 
   <Identity
     Name="4264644686220.KMS"
-    Publisher="CN=埃博拉酱"
-    Version="1.0.0.0" />
+    Publisher="CN=FD9B4583-309F-46EC-ADA4-1CA4EDCA1A3A"
+    Version="1.0.3.0" />
 
   <Properties>
-    <DisplayName>KMS激活</DisplayName>
+    <DisplayName>KMS激活： Windows &amp; Office</DisplayName>
     <PublisherDisplayName>埃博拉酱</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
@@ -31,8 +31,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="KMS激活"
-        Description="KMS激活"
+        DisplayName="KMS激活：Windows &amp; Office"
+        Description="KMS激活：Windows &amp; Office"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">

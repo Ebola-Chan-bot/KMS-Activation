@@ -57,7 +57,6 @@ Class MainWindow
 			密钥列表(a) = 文件读取器.ReadString
 		Next
 		文件读取器.Close()
-		读入设置()
 	End Sub
 
 	Private Sub 激活Windows_Click(sender As Object, e As RoutedEventArgs) Handles 激活Windows.Click
@@ -93,5 +92,9 @@ Class MainWindow
 
 	Private Sub MainWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 		写出设置()
+	End Sub
+
+	Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+		读入设置()
 	End Sub
 End Class
