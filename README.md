@@ -1,4 +1,8 @@
-KMS激活你的Windows系统和Office桌面应用。本应用将发布在Microsoft Store，GitHub不提供发布版本。
+KMS激活你的Windows系统和Office桌面应用。
+
+部署方法：
+- 对绝大多数用户来说，应当从 Microsoft Store 下载安装。
+- 如果你的系统版本没有附带 Microsoft Store（如服务器版本），GitHub提供旁加载版本下载安装
 
 本应用可用于激活您的Windows操作系统和Office桌面应用。
 
