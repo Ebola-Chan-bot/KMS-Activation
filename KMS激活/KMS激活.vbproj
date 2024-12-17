@@ -5,8 +5,9 @@
     <RootNamespace>KMS激活</RootNamespace>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>KMS.ico</ApplicationIcon>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <Platforms>x64</Platforms>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,13 +20,6 @@
     <Import Include="System.Windows.Media.Imaging" />
     <Import Include="System.Windows.Navigation" />
     <Import Include="System.Windows.Shapes" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Win32-API.NET">
-      <HintPath>Win32-API.NET.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

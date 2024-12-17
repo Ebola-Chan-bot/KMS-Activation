@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-
+Imports System.Runtime.InteropServices
 Class MainWindow
 	Private 密钥列表 As String()
 	ReadOnly 设置目录 As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
@@ -84,6 +84,10 @@ Class MainWindow
 		写出设置()
 	End Sub
 
+	<DllImport("WinBrand.dll", CharSet:=CharSet.Unicode, SetLastError:=True)>
+	Public Shared Function BrandingFormatString(ByVal format As String) As String
+	End Function
+
 	Private Async Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 		Dim 文本列表 = Await File.ReadAllLinesAsync(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "密钥库.txt"))
 		Dim 选项上限 As Byte = 文本列表.Length - 1
@@ -96,7 +100,7 @@ Class MainWindow
 			密钥列表(a) = 两项(1)
 		Next
 		版本或密钥.ItemsSource = 操作系统版本
-		Dim 当前版本 = (New Win32APINET.WinBrand).BrandingFormatString("%WINDOWS_LONG%")
+		Dim 当前版本 As String = BrandingFormatString("%WINDOWS_LONG%")
 		For a = 0 To 选项上限
 			If 操作系统版本(a) = 当前版本 Then
 				版本或密钥.SelectedIndex = a
