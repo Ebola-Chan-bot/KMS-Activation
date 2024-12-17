@@ -22,6 +22,9 @@ Class MainWindow
 			Height = 读入器.ReadUInt16
 			KMS服务器地址.Text = 读入器.ReadString
 			OSPP位置.Text = 读入器.ReadString
+			If 读入器.ReadBoolean Then
+				版本或密钥.Text = 读入器.ReadString
+			End If
 		Catch
 			读入器.Close()
 			写出设置()
@@ -37,6 +40,8 @@ Class MainWindow
 			写出器.Write(CUShort(Height))
 			写出器.Write(KMS服务器地址.Text)
 			写出器.Write(OSPP位置.Text)
+			写出器.Write(版本或密钥.SelectedIndex < 0)
+			写出器.Write(版本或密钥.Text) '用户自定义密钥
 		End Using
 	End Sub
 
