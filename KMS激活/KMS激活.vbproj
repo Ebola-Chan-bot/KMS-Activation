@@ -2,13 +2,20 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <RootNamespace>KMS激活</RootNamespace>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>KMS.ico</ApplicationIcon>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
-    <Platforms>x64</Platforms>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>KMS.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="密钥库.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="KMS.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Windows" />
@@ -23,15 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Ijwhost.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Win32-API.NET.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="密钥库.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="密钥库.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

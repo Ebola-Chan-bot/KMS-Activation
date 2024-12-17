@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 Class MainWindow
 	Private 密钥列表 As String()
@@ -21,12 +22,6 @@ Class MainWindow
 			Height = 读入器.ReadUInt16
 			KMS服务器地址.Text = 读入器.ReadString
 			OSPP位置.Text = 读入器.ReadString
-			Dim 版本选项 As SByte = 读入器.ReadSByte
-			If 版本选项 < 0 Then
-				版本或密钥.Text = 读入器.ReadString
-			Else
-				版本或密钥.SelectedIndex = 版本选项
-			End If
 		Catch
 			读入器.Close()
 			写出设置()
@@ -42,8 +37,6 @@ Class MainWindow
 			写出器.Write(CUShort(Height))
 			写出器.Write(KMS服务器地址.Text)
 			写出器.Write(OSPP位置.Text)
-			写出器.Write(CSByte(版本或密钥.SelectedIndex))
-			写出器.Write(版本或密钥.Text)
 		End Using
 	End Sub
 
@@ -88,25 +81,14 @@ Class MainWindow
 	Public Shared Function BrandingFormatString(ByVal format As String) As String
 	End Function
 
-	Private Async Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-		Dim 文本列表 = Await File.ReadAllLinesAsync(Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "密钥库.txt"))
-		Dim 选项上限 As Byte = 文本列表.Length - 1
-		Dim 操作系统版本(选项上限) As String
-		ReDim 密钥列表(选项上限)
-		Dim 两项 As String()
-		For a = 0 To 选项上限
-			两项 = 文本列表(a).Split(vbTab)
-			操作系统版本(a) = 两项(0)
-			密钥列表(a) = 两项(1)
-		Next
-		版本或密钥.ItemsSource = 操作系统版本
+	Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+		Dim 版本密钥 As IEnumerable(Of String()) = From 行 In New StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("KMS激活.密钥库.txt")).ReadToEnd().Split(vbCrLf) Select 行.Split(vbTab)
+		Dim 所有版本 As IEnumerable(Of String) = From 两项 In 版本密钥 Select 两项(0)
+		版本或密钥.ItemsSource = 所有版本
+		密钥列表 = (From 两项 In 版本密钥 Select 两项(1)).ToArray
 		Dim 当前版本 As String = BrandingFormatString("%WINDOWS_LONG%")
-		For a = 0 To 选项上限
-			If 操作系统版本(a) = 当前版本 Then
-				版本或密钥.SelectedIndex = a
-				Exit For
-			End If
-		Next
+		Dim 匹配度 = (From 两项 In 版本密钥 Select Aggregate 元组 In 两项(0).Zip(当前版本) Where 元组.First <> " " Take While 元组.First = 元组.Second Into Count()).ToArray
+		版本或密钥.SelectedIndex = (From Index In 匹配度.Index Where Index.Item = 匹配度.Max Select Index.Index).First
 		读入设置()
 	End Sub
 

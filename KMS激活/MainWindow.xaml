@@ -1,42 +1,43 @@
 ﻿<Window x:Class="MainWindow"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:KMS激活"
-		mc:Ignorable="d" Title="KMS激活" Width="400" Height="200">
-	<StackPanel>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			<TextBlock Text="KMS服务器地址" Grid.Column="0"/>
-			<TextBox x:Name="KMS服务器地址" Grid.Column="1" Text="kms.your-organization.org"/>
-		</Grid>
-		<GroupBox Header="Windows">
-			<StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="选择系统版本或输入激活密钥"/>
-					<ComboBox x:Name="版本或密钥" IsEditable="True"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Button x:Name="激活Windows" Content="激活Windows"/>
-					<TextBlock x:Name="Windows激活结果" Text="激活可能会偶然失败，不妨再试一次"/>
-				</StackPanel>
-			</StackPanel>
-		</GroupBox>
-		<GroupBox Header="Office">
-			<StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Button x:Name="设置OSPP位置" Content="OSPP位置"/>
-					<TextBlock x:Name="OSPP位置" Text="C:\Program Files\Microsoft Office\Office16"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Button x:Name="激活Office" Content="激活Office" Grid.Column="1"/>
-					<TextBlock x:Name="Office激活结果" Text="激活可能会偶然失败，不妨再试一次"/>
-				</StackPanel>
-			</StackPanel>
-		</GroupBox>
-	</StackPanel>
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KMS激活"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="400" Height="200">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="KMS服务器地址" Grid.Column="0"/>
+            <TextBox x:Name="KMS服务器地址" Grid.Column="1" Text="kms.your-organization.org"/>
+        </Grid>
+        <GroupBox Header="Windows">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="选择系统版本或输入激活密钥"/>
+                    <ComboBox x:Name="版本或密钥" IsEditable="True"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="激活Windows" Content="激活Windows"/>
+                    <TextBlock x:Name="Windows激活结果" Text="激活可能会偶然失败，不妨再试一次"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Office">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="设置OSPP位置" Content="OSPP位置"/>
+                    <TextBlock x:Name="OSPP位置" Text="C:\Program Files\Microsoft Office\Office16"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="激活Office" Content="激活Office" Grid.Column="1"/>
+                    <TextBlock x:Name="Office激活结果" Text="激活可能会偶然失败，不妨再试一次"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </Window>
