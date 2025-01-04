@@ -45,6 +45,12 @@ Class MainWindow
 		End Using
 	End Sub
 
+	<DllImport("WinBrand.dll", CharSet:=CharSet.Unicode, SetLastError:=True)>
+	Public Shared Function BrandingFormatString(ByVal format As String) As String
+	End Function
+
+	Shared ReadOnly 当前版本 As String = BrandingFormatString("%WINDOWS_LONG%")
+
 	Private Sub 激活Windows_Click(sender As Object, e As RoutedEventArgs) Handles 激活Windows.Click
 		Dim 服务器地址 As String = KMS服务器地址.Text
 		Dim 密钥 = If(版本或密钥.SelectedIndex < 0, 版本或密钥.Text, 密钥列表(版本或密钥.SelectedIndex))
@@ -57,9 +63,14 @@ Class MainWindow
 			Windows激活结果.Text = "密钥含有非法字符"
 			Return
 		End If
-		启动信息.Arguments = "Start-Process powershell -ArgumentList @('slmgr /skms " & 服务器地址 & ";slmgr /ipk " & 密钥 & ";slmgr /ato') -Verb Runas"
+		Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
+		If 当前版本.EndsWith("Evaluation") Then
+			Process.Start("Dism", $"/online /Set-Edition:ServerStandard /ProductKey:{密钥} /AcceptEula")
+		Else
+			Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
+		End If
+		Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ato")
 		Windows激活结果.Text = ""
-		Call Process.Start(启动信息)
 	End Sub
 
 	Private Sub 激活Office_Click(sender As Object, e As RoutedEventArgs) Handles 激活Office.Click
@@ -82,16 +93,11 @@ Class MainWindow
 		写出设置()
 	End Sub
 
-	<DllImport("WinBrand.dll", CharSet:=CharSet.Unicode, SetLastError:=True)>
-	Public Shared Function BrandingFormatString(ByVal format As String) As String
-	End Function
-
 	Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 		Dim 版本密钥 As IEnumerable(Of String()) = From 行 In New StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("KMS激活.密钥库.txt")).ReadToEnd().Split(vbCrLf) Select 行.Split(vbTab)
 		Dim 所有版本 As IEnumerable(Of String) = From 两项 In 版本密钥 Select 两项(0)
 		版本或密钥.ItemsSource = 所有版本
 		密钥列表 = (From 两项 In 版本密钥 Select 两项(1)).ToArray
-		Dim 当前版本 As String = BrandingFormatString("%WINDOWS_LONG%")
 		Dim 匹配度 = (From 两项 In 版本密钥 Select Aggregate 元组 In 两项(0).Zip(当前版本) Where 元组.First <> " " Take While 元组.First = 元组.Second Into Count()).ToArray
 		版本或密钥.SelectedIndex = (From Index In 匹配度.Index Where Index.Item = 匹配度.Max Select Index.Index).First
 		读入设置()
