@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports Microsoft.Win32
 Class MainWindow
 	Private 密钥列表 As String()
 	ReadOnly 设置目录 As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
@@ -65,7 +66,11 @@ Class MainWindow
 		End If
 		Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
 		If 当前版本.EndsWith("Evaluation") Then
-			Process.Start("Dism", $"/online /Set-Edition:ServerStandard /ProductKey:{密钥} /AcceptEula")
+			Dim EditionID As String = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion", False).GetValue("EditionID")
+			If EditionID.EndsWith("Eval") Then
+				EditionID = EditionID.SkipLast(4).ToArray
+				Process.Start("Dism", $"/online /Set-Edition: {EditionID} /ProductKey:{密钥} /AcceptEula")
+			End If
 		Else
 			Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
 		End If
