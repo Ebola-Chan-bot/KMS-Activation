@@ -64,17 +64,23 @@ Class MainWindow
 			Windows激活结果.Text = "密钥含有非法字符"
 			Return
 		End If
-		Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
+		Dim 进程启动信息 As New ProcessStartInfo("slmgr", "/skms " & 服务器地址) With {.CreateNoWindow = True, .UseShellExecute = True, .WindowStyle = ProcessWindowStyle.Hidden}
+		Process.Start(进程启动信息)
 		If 当前版本.EndsWith("Evaluation") Then
 			Dim EditionID As String = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion", False).GetValue("EditionID")
 			If EditionID.EndsWith("Eval") Then
 				EditionID = EditionID.SkipLast(4).ToArray
-				Process.Start("Dism", $"/online /Set-Edition:{EditionID} /ProductKey:{密钥} /AcceptEula").WaitForExit() 'Dism的参数名称和值之间不能有空格。此操作时间较长，且不成功不能继续。
+				进程启动信息.FileName = "Dism"
+				进程启动信息.Arguments = $"/online /Set-Edition:{EditionID} /ProductKey:{密钥} /AcceptEula"
+				Process.Start(进程启动信息)
+				进程启动信息.FileName = "slmgr"
 			End If
 		Else
-			Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
+			进程启动信息.Arguments = "/ipk " & 密钥
+			Process.Start(进程启动信息)
 		End If
-		Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ato")
+		进程启动信息.Arguments = "/ato"
+		Process.Start(进程启动信息)
 		Windows激活结果.Text = ""
 	End Sub
 
