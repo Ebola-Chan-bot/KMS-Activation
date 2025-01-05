@@ -64,8 +64,6 @@ Class MainWindow
 			Windows激活结果.Text = "密钥含有非法字符"
 			Return
 		End If
-		'UseShellExecute和cscript都不弹出结果窗口，只能用wscript
-		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
 		If 当前版本.EndsWith("Evaluation") Then
 			Dim EditionID As String = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion", False).GetValue("EditionID")
 			If EditionID.EndsWith("Eval") Then
@@ -75,6 +73,8 @@ Class MainWindow
 				Return
 			End If
 		End If
+		'UseShellExecute和cscript都不弹出结果窗口，只能用wscript
+		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
 		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
 		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ato")
 		Windows激活结果.Text = ""
