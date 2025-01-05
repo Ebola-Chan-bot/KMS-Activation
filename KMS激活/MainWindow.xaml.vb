@@ -69,7 +69,7 @@ Class MainWindow
 			Dim EditionID As String = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion", False).GetValue("EditionID")
 			If EditionID.EndsWith("Eval") Then
 				EditionID = EditionID.SkipLast(4).ToArray
-				Process.Start("Dism", $"/online /Set-Edition: {EditionID} /ProductKey:{密钥} /AcceptEula")
+				Process.Start("Dism", $"/online /Set-Edition:{EditionID} /ProductKey:{密钥} /AcceptEula").WaitForExit() 'Dism的参数名称和值之间不能有空格。此操作时间较长，且不成功不能继续。
 			End If
 		Else
 			Process.Start("cscript", "//B //Nologo C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
