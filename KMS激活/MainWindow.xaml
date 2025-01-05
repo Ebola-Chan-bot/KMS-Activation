@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMS激活"
         mc:Ignorable="d"
-        Title="MainWindow" Width="400" Height="200">
+        Title="KMS激活：Windows &amp; Office —— By 埃博拉酱" Width="400" Height="200">
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
