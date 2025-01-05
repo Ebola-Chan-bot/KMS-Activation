@@ -1,8 +1,9 @@
 KMS激活你的Windows系统和Office桌面应用。
 
 部署方法：
-- 对绝大多数用户来说，应当从 Microsoft Store 下载安装。
-- 如果你的系统版本没有附带 Microsoft Store（如服务器版本），GitHub提供旁加载版本下载安装
+- ~~对绝大多数用户来说，应当从 Microsoft Store 下载安装。~~ 已下架
+- ~~如果你的系统版本没有附带 Microsoft Store（如服务器版本），GitHub提供旁加载版本下载安装~~ 已下架
+- 直接从Release中下载免安装的单一可执行文件
 
 本应用可用于激活您的Windows操作系统和Office桌面应用。
 
@@ -16,9 +17,3 @@ KMS是一种组织内部批量激活Windows和Office系列软件的服务系统�
 激活操作需要管理员权限。如果您不是管理员用户，本应用将无法正常工作。
 
 注意，Windows家庭版和 Office 365 无法使用KMS激活。
-
-![](界面截图.png)
-
-![](Windows激活成功.png)
-
-![](Office激活.png)
