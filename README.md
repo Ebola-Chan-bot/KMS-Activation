@@ -18,4 +18,4 @@ KMS是一种组织内部批量激活Windows和Office系列软件的服务系统�
 
 注意，Windows家庭版和 Office 365 无法使用KMS激活。
 
-![image](https://github.com/user-attachments/assets/5224b2d2-2e50-4578-bd17-6264a45fb810)
+![image](https://github.com/user-attachments/assets/408dd413-26de-4351-bd00-b5b00e2e9a8e)
