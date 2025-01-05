@@ -52,7 +52,7 @@ Class MainWindow
 
 	Shared ReadOnly 当前版本 As String = BrandingFormatString("%WINDOWS_LONG%")
 
-	Private Sub 激活Windows_Click(sender As Object, e As RoutedEventArgs) Handles 激活Windows.Click
+	Private Async Sub 激活Windows_Click(sender As Object, e As RoutedEventArgs) Handles 激活Windows.Click
 		Dim 服务器地址 As String = KMS服务器地址.Text
 		Dim 密钥 = If(版本或密钥.SelectedIndex < 0, 版本或密钥.Text, 密钥列表(版本或密钥.SelectedIndex))
 		'防注入检查
@@ -64,23 +64,19 @@ Class MainWindow
 			Windows激活结果.Text = "密钥含有非法字符"
 			Return
 		End If
-		Dim 进程启动信息 As New ProcessStartInfo("slmgr", "/skms " & 服务器地址) With {.CreateNoWindow = True, .UseShellExecute = True, .WindowStyle = ProcessWindowStyle.Hidden}
-		Process.Start(进程启动信息)
+		'UseShellExecute和cscript都不弹出结果窗口，只能用wscript
+		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
 		If 当前版本.EndsWith("Evaluation") Then
 			Dim EditionID As String = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion", False).GetValue("EditionID")
 			If EditionID.EndsWith("Eval") Then
 				EditionID = EditionID.SkipLast(4).ToArray
-				进程启动信息.FileName = "Dism"
-				进程启动信息.Arguments = $"/online /Set-Edition:{EditionID} /ProductKey:{密钥} /AcceptEula"
-				Process.Start(进程启动信息)
-				进程启动信息.FileName = "slmgr"
+				Await Process.Start("Dism", $"/online /Set-Edition:{EditionID} /ProductKey:{密钥} /AcceptEula").WaitForExitAsync()
+				Windows激活结果.Text = "请重启计算机后再试"
+				Return
 			End If
-		Else
-			进程启动信息.Arguments = "/ipk " & 密钥
-			Process.Start(进程启动信息)
 		End If
-		进程启动信息.Arguments = "/ato"
-		Process.Start(进程启动信息)
+		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
+		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ato")
 		Windows激活结果.Text = ""
 	End Sub
 
