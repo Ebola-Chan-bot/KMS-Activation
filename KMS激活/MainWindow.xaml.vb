@@ -75,7 +75,7 @@ Class MainWindow
 		End If
 		'UseShellExecute和cscript都不弹出结果窗口，只能用wscript
 		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /skms " & 服务器地址)
-		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ipk " & 密钥)
+		Await Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ipk " & 密钥).WaitForExitAsync()
 		Process.Start("wscript", "C:\Windows\System32\slmgr.vbs /ato")
 		Windows激活结果.Text = ""
 	End Sub
